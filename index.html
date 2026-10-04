@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steam (2003)</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="assets/icons/steam_games/dwd2.png">
+</head>
+<body class="theme-steam-green">
+
+  <!-- Desktop / Background Wrapper -->
+  <div id="desktop-container">
+
+    <!-- MAIN STEAM WINDOW (UNIFIED SINGLE INTERFACE) -->
+    <main class="steam-window" id="main-steam-window">
+      
+      <!-- Unified Window Title Bar -->
+      <div class="steam-titlebar" id="main-titlebar">
+        <div class="titlebar-title" id="valve-valve-trigger" style="cursor: pointer;" title="Клапан Valve">
+          <span class="valve-tag">VALVE</span>
+          <img src="assets/icons/steam_valve.svg" alt="Steam" class="steam-gear-icon">
+          <span class="titlebar-text">Steam - Игры</span>
+        </div>
+        
+        <div class="titlebar-right-zone">
+          <div class="titlebar-quick-tools">
+            <button class="sys-btn" id="toggle-sound-btn" title="Включить/выключить звуки интерфейса">
+              <img src="assets/icons/sound_on.svg" alt="Sound" class="sys-ico" id="sound-ico-img">
+              <span id="sound-status-text">Звук: ВКЛ</span>
+            </button>
+            <button class="sys-btn" id="open-friends-shortcut">
+              <img src="assets/icons/friends_icon.svg" alt="Friends" class="sys-ico">
+              <span class="status-indicator online"></span> Друзья (1 онлайн)
+            </button>
+            <button class="sys-btn" id="open-servers-shortcut">
+              <img src="assets/icons/servers_icon.svg" alt="Servers" class="sys-ico">
+              <span>Серверы</span>
+            </button>
+            <button class="sys-btn" id="open-activate-shortcut">
+              <img src="assets/icons/cd_key_icon.svg" alt="CD-Key" class="sys-ico">
+              <span>Активация ключа</span>
+            </button>
+            <button class="sys-btn" id="open-console-shortcut" title="Консоль разработчика Valve Source (~)">
+              <img src="assets/icons/hammer_sdk.svg" alt="Console" class="sys-ico">
+              <span>Консоль (~)</span>
+            </button>
+            <button class="sys-btn" id="open-overlay-shortcut" title="Оверлей Steam (Shift+Tab)">
+              <img src="assets/icons/steam_icon.svg" alt="Overlay" class="sys-ico">
+              <span>Оверлей (Shift+Tab)</span>
+            </button>
+          </div>
+
+          <div class="window-controls">
+            <button class="win-btn minimize" id="win-min-btn" title="Свернуть">_</button>
+            <button class="win-btn maximize" id="win-max-btn" title="Развернуть">□</button>
+            <button class="win-btn close" id="win-close-btn" title="Закрыть">×</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Classic Menu Bar -->
+      <nav class="steam-menubar">
+        <div class="menu-item" data-menu="file">
+          <span>Steam</span>
+          <div class="menu-dropdown">
+            <div class="dropdown-item" id="menu-check-updates">Проверить обновления...</div>
+            <div class="dropdown-item" id="menu-activate-key">Активировать продукт в Steam...</div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item" id="menu-go-offline">Перейти в автономный режим</div>
+            <div class="dropdown-item" id="menu-settings">Настройки...</div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item" id="menu-exit">Выход</div>
+          </div>
+        </div>
+        <div class="menu-item" data-menu="view">
+          <span>Вид</span>
+          <div class="menu-dropdown">
+            <div class="dropdown-item active-view-mode" id="view-details">Подробный вид</div>
+            <div class="dropdown-item" id="view-list">Список игр (Таблица)</div>
+            <div class="dropdown-item" id="view-small">Компактный режим</div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item" id="view-console">Консоль разработчика (~)</div>
+            <div class="dropdown-item" id="view-overlay">Оверлей Steam (Shift+Tab)</div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item" id="view-servers">Серверы</div>
+            <div class="dropdown-item" id="view-friends">Друзья</div>
+          </div>
+        </div>
+        <div class="menu-item" data-menu="friends">
+          <span>Друзья</span>
+          <div class="menu-dropdown">
+            <div class="dropdown-item" id="menu-friends-open">Показать список друзей</div>
+            <div class="dropdown-item" id="menu-add-friend">Добавить друга (TAZIK29)...</div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item">Статус: В сети</div>
+            <div class="dropdown-item">Статус: В игре</div>
+          </div>
+        </div>
+        <div class="menu-item" data-menu="games">
+          <span>Игры</span>
+          <div class="menu-dropdown">
+            <div class="dropdown-item" id="menu-launch-selected">Запустить выбранную игру</div>
+            <div class="dropdown-item" id="menu-browse-games">Каталог модов Valve</div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item" id="menu-backup-files">Резервное копирование игры...</div>
+          </div>
+        </div>
+        <div class="menu-item" data-menu="help">
+          <span>Справка</span>
+          <div class="menu-dropdown">
+            <div class="dropdown-item" id="menu-about-tazik">О разработчике TAZIK29</div>
+            <div class="dropdown-item" id="menu-about-steam">О программе Steam 2003</div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item" id="menu-secrets-quest">Тайны Steam (0/10)...</div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Navigation Tabs -->
+      <div class="steam-tabs-container">
+        <div class="steam-tabs">
+          <button class="steam-tab active" data-tab="games">Игры</button>
+          <button class="steam-tab" data-tab="store">Магазин / Моды</button>
+          <button class="steam-tab" data-tab="friends-tab">Сообщество TAZIK29</button>
+          <button class="steam-tab" data-tab="servers-tab">Серверы</button>
+          <button class="steam-tab" data-tab="news">Новости</button>
+          <button class="steam-tab" data-tab="about-author">Разработчик</button>
+        </div>
+        <div class="steam-account-bar">
+          <span class="account-label">Аккаунт:</span>
+          <span class="account-name">T1NE</span>
+          <span id="archivist-badge-slot"></span>
+          <span class="account-status in-game">В игре: Deal With Destiny 2</span>
+        </div>
+      </div>
+
+      <!-- TAB CONTENT AREA -->
+      <div class="steam-main-content">
+
+        <!-- ================= TAB 1: GAMES (LIBRARY) ================= -->
+        <section class="tab-pane active" id="tab-games">
+          <div class="library-layout">
+            
+            <!-- Left Sidebar: Games List with Beautiful Custom SVGs -->
+            <aside class="games-sidebar">
+              <div class="sidebar-header">
+                <span class="sidebar-title">Установленные игры</span>
+                <span class="sidebar-filter-btn" id="library-filter-badge">Все (7)</span>
+              </div>
+              <div class="sidebar-search-container">
+                <input type="text" id="library-search-input" placeholder="Поиск в библиотеке..." class="sidebar-search-input" autocomplete="off">
+              </div>
+              <div class="sidebar-filter-chips">
+                <button class="filter-chip active" data-filter="all">Все</button>
+                <button class="filter-chip" data-filter="mod">Моды</button>
+                <button class="filter-chip" data-filter="mp">Сетевые</button>
+                <button class="filter-chip" data-filter="valve">Valve</button>
+              </div>
+              <ul class="games-list" id="games-list">
+                <li class="game-item selected" data-game-id="dwd2" data-category="mod story">
+                  <div class="custom-game-icon-box">
+                    <img src="assets/icons/steam_games/dwd2.png" alt="DWD2" class="custom-game-icon-img">
+                  </div>
+                  <div class="game-meta">
+                    <span class="game-title">Deal With Destiny 2</span>
+                    <span class="game-status highlight">Готова к запуску</span>
+                  </div>
+                </li>
+                <li class="game-item" data-game-id="hl2" data-category="valve story">
+                  <div class="custom-game-icon-box">
+                    <img src="assets/icons/steam_games/hl2.jpg" alt="HL2" class="custom-game-icon-img">
+                  </div>
+                  <div class="game-meta">
+                    <span class="game-title">Half-Life 2</span>
+                    <span class="game-status">100% - Готово</span>
+                  </div>
+                </li>
+                <li class="game-item" data-game-id="cs16" data-category="valve mp">
+                  <div class="custom-game-icon-box">
+                    <img src="assets/icons/steam_games/cs16.jpg" alt="CS 1.6" class="custom-game-icon-img">
+                  </div>
+                  <div class="game-meta">
+                    <span class="game-title">Counter-Strike 1.6</span>
+                    <span class="game-status">100% - Готово</span>
+                  </div>
+                </li>
+                <li class="game-item" data-game-id="hl2dm" data-category="valve mp">
+                  <div class="custom-game-icon-box">
+                    <img src="assets/icons/steam_games/hl2dm.jpg" alt="HL2DM" class="custom-game-icon-img">
+                  </div>
+                  <div class="game-meta">
+                    <span class="game-title">Half-Life 2: Deathmatch</span>
+                    <span class="game-status">100% - Готово</span>
+                  </div>
+                </li>
+                <li class="game-item" data-game-id="synergy" data-category="mod mp">
+                  <div class="custom-game-icon-box">
+                    <img src="assets/icons/steam_games/synergy.jpg" alt="Synergy" class="custom-game-icon-img">
+                  </div>
+                  <div class="game-meta">
+                    <span class="game-title">Synergy Co-op</span>
+                    <span class="game-status">Обновление завершено</span>
+                  </div>
+                </li>
+                <li class="game-item" data-game-id="tfc" data-category="valve mp">
+                  <div class="custom-game-icon-box">
+                    <img src="assets/icons/steam_games/tfc.jpg" alt="TFC" class="custom-game-icon-img">
+                  </div>
+                  <div class="game-meta">
+                    <span class="game-title">Team Fortress Classic</span>
+                    <span class="game-status">100% - Готово</span>
+                  </div>
+                </li>
+                <li class="game-item" data-game-id="gmod" data-category="mod mp">
+                  <div class="custom-game-icon-box">
+                    <img src="assets/icons/steam_games/gmod.jpg" alt="Garry's Mod" class="custom-game-icon-img">
+                  </div>
+                  <div class="game-meta">
+                    <span class="game-title">Garry's Mod</span>
+                    <span class="game-status">100% - Готово</span>
+                  </div>
+                </li>
+              </ul>
+
+              <!-- Bottom sidebar stats -->
+              <div class="sidebar-footer">
+                <div class="mini-stat">
+                  <span>Объем диска:</span> <strong>342.1 MB / 40 GB</strong>
+                </div>
+                <div class="mini-stat">
+                  <span>Статус сети Valve:</span> <strong class="green-text">В сети</strong>
+                </div>
+              </div>
+            </aside>
+
+            <!-- Right Detail View: Active Game -->
+            <section class="game-detail-panel" id="game-detail-panel">
+              
+              <!-- Game Header Banner & Actions -->
+              <div class="game-hero-header">
+                <div class="hero-header-image-container">
+                  <img src="assets/header.jpg" alt="Deal With Destiny 2 Header" id="hero-img" class="hero-img">
+                  <div class="hero-overlay">
+                    <div class="hero-logo-row">
+                      <img src="assets/icons/steam_games/dwd2.png" alt="DWD2 Logo" class="hero-custom-badge-icon">
+                      <div>
+                        <h1 class="hero-game-title" id="hero-title">Deal With Destiny 2</h1>
+                        <p class="hero-subtitle" id="hero-subtitle">Продолжение культовой модификации для Half-Life 2 от TAZIK29</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="hero-action-bar">
+                  <button class="steam-play-button" id="launch-game-btn">
+                    <span class="play-triangle">►</span>
+                    <span class="play-label">ЗАПУСТИТЬ ИГРУ</span>
+                  </button>
+
+                  <div class="game-quick-stats">
+                    <div class="stat-box">
+                      <span class="stat-caption">Время в игре:</span>
+                      <strong class="stat-val" id="hero-playtime">1,337 ч.</strong>
+                    </div>
+                    <div class="stat-box">
+                      <span class="stat-caption">Последний запуск:</span>
+                      <strong class="stat-val" id="hero-last-played">Сегодня</strong>
+                    </div>
+                    <div class="stat-box">
+                      <span class="stat-caption">Разработчик:</span>
+                      <strong class="stat-val highlight" id="hero-dev">TAZIK29</strong>
+                    </div>
+                    <div class="stat-box">
+                      <span class="stat-caption">Издатель:</span>
+                      <strong class="stat-val" id="hero-pub">KUNI</strong>
+                    </div>
+                  </div>
+
+                  <div class="hero-secondary-actions">
+                    <button class="steam-retro-btn" id="btn-open-folder">Папка игры</button>
+                    <button class="steam-retro-btn" id="btn-check-integrity">Проверить кэш</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Content Scrollable Body with Authentic Steam Screenshots Gallery -->
+              <div class="game-body-scrollable">
+
+                <!-- Screenshots Gallery Strip (Real Steam Screenshots) -->
+                <div class="game-screenshots-section" id="game-screenshots-section">
+                  <div class="screenshots-strip-header">
+                    <span class="strip-title">СКРИНШОТЫ СООБЩЕСТВА STEAM</span>
+                    <span class="strip-hint"><img src="assets/icons/zoom.svg" alt="zoom" class="hint-svg-icon"> Нажмите на скриншот для полноэкранного просмотра</span>
+                  </div>
+                  <div class="screenshots-strip-container" id="screenshots-strip-container">
+                    <!-- Populated dynamically per active game via app.js -->
+                  </div>
+                </div>
+
+                <!-- Two-Column Layout: Description & Details -->
+                <div class="game-info-columns">
+                  
+                  <!-- Left: Detailed Description & Story -->
+                  <div class="info-column-left">
+                    <div class="content-block">
+                      <h3 class="block-title">ОБ ИГРЕ / СЮЖЕТ</h3>
+                      <div class="steam-bbcode-content" id="game-desc-content">
+                        <h4>ДОБРО ПОЖАЛОВАТЬ, ИГРОК. СЛЕДУЮЩАЯ ГЛАВА НАЧИНАЕТСЯ.</h4>
+                        <p><strong>Deal With Destiny 2</strong> (Дело о Судьбе 2) — фанатское продолжение культовой сюжетной модификации для Half-Life 2 от разработчика <strong>TAZIK29</strong>. Проект расширяет вселенную и бережно сохраняет фирменную мрачную атмосферу.</p>
+                        <p>Вы снова играете за <em>Оскара Уилсона (Oscar Willson)</em> — главного героя, судьба которого оказалась намертво вплетена в паутину Альянса. После побега на деревянном товарном поезде в финале первой части, надежды на спокойную жизнь рушатся: вертолеты Альянса перехватывают эшелон, бронетехника блокирует пути, и начинается масштабное крушение.</p>
+                        <p>Сжимая в руках верную монтировку, Оскар пробивается сквозь разрушенные промышленные депо, железнодорожные сортировки и заблокированные гермоворота навстречу неизвестности.</p>
+                        
+                        <h4>ОСОБЕННОСТИ ГЕЙМПЛЕЯ:</h4>
+                        <ul class="steam-bullet-list">
+                          <li><strong>Линейная захватывающая кампания</strong> в лучших традициях Half-Life 2 и Episode Two.</li>
+                          <li><strong>Классический арсенал Source Engine</strong> с использованием физики и окружения в бою.</li>
+                          <li><strong>Интерактивные физические пазлы</strong> и кинематографичные срежиссированные сцены.</li>
+                          <li><strong>Оригинальная русская озвучка</strong> и проработанные диалоги персонажей.</li>
+                          <li><strong>Разнообразие локаций:</strong> тесные товарные вагоны, промышленные дворы, полуразрушенные станции и открытые железнодорожные перегоны.</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <!-- Dynamic Achievements Block with Game-specific SVGs -->
+                    <div class="content-block" id="game-achievements-block">
+                      <div class="block-header">
+                        <h3 class="block-title" id="achievements-count-title">ДОСТИЖЕНИЯ STEAM</h3>
+                        <span class="block-hint" id="achievements-progress-hint">Загрузка достижений...</span>
+                      </div>
+                      <div class="achievements-progress-bar-wrap">
+                        <div class="achievements-progress-bar-fill" id="achievements-progress-bar" style="width: 0%;"></div>
+                      </div>
+                      <div class="achievements-grid" id="achievements-grid">
+                        <!-- Populated dynamically via app.js per game -->
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Right: Metadata & Tech specs -->
+                  <div class="info-column-right">
+                    
+                    <!-- Capsule Box -->
+                    <div class="content-block capsule-box">
+                      <img src="assets/capsule.jpg" alt="Deal With Destiny 2 Capsule" class="capsule-img">
+                      <div class="meta-row">
+                        <span class="meta-label">Жанр:</span>
+                        <span class="meta-val" id="meta-genre">Action, Story Rich, FPS, Mod</span>
+                      </div>
+                      <div class="meta-row">
+                        <span class="meta-label">Движок:</span>
+                        <span class="meta-val" id="meta-engine">Source Engine (Valve)</span>
+                      </div>
+                      <div class="meta-row">
+                        <span class="meta-label">Разработчик:</span>
+                        <span class="meta-val highlight-gold" id="meta-dev">TAZIK29</span>
+                      </div>
+                      <div class="meta-row">
+                        <span class="meta-label">Издатель:</span>
+                        <span class="meta-val" id="meta-pub">KUNI</span>
+                      </div>
+                      <div class="meta-row">
+                        <span class="meta-label">Дата выхода:</span>
+                        <span class="meta-val highlight-dev" id="meta-release">Скоро (Дата: 2031)</span>
+                      </div>
+                      <div class="meta-row">
+                        <span class="meta-label">Языки:</span>
+                        <span class="meta-val" id="meta-languages">Русский (полный дубляж), English</span>
+                      </div>
+                      <div class="meta-row">
+                        <span class="meta-label">Steam AppID:</span>
+                        <span class="meta-val" id="meta-appid">4825530</span>
+                      </div>
+                    </div>
+
+                    <!-- System Requirements -->
+                    <div class="content-block">
+                      <h3 class="block-title">СИСТЕМНЫЕ ТРЕБОВАНИЯ</h3>
+                      <div class="sys-reqs-box">
+                        <strong>Минимальные:</strong>
+                        <ul>
+                          <li><strong>ОС:</strong> Windows XP / Vista / 7 / 10 / 11</li>
+                          <li><strong>Процессор:</strong> 1.7 GHz Pentium 4 или эквивалент</li>
+                          <li><strong>ОЗУ:</strong> 512 MB RAM (рекомендуется 1 GB)</li>
+                          <li><strong>Видеокарта:</strong> DirectX 8.1+ совместимая (с поддержкой SSE)</li>
+                          <li><strong>Место на диске:</strong> 4.5 GB свободного пространства</li>
+                          <li><strong>Звуковая карта:</strong> DirectX 9.0c совместимая</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <!-- Developer Links with CUSTOM ICONS -->
+                    <div class="content-block">
+                      <h3 class="block-title">ССЫЛКИ И СООБЩЕСТВО</h3>
+                      <div class="links-list">
+                        <a href="#chat" class="steam-link-btn" id="link-chat-tazik">
+                          <img src="assets/icons/chat.svg" alt="Chat" class="link-ico-svg">
+                          <span>Написать разработчику TAZIK29</span>
+                        </a>
+                        <a href="#servers" class="steam-link-btn" id="link-servers-dwd">
+                          <img src="assets/icons/servers_icon.svg" alt="Servers" class="link-ico-svg">
+                          <span>Серверы сообщества</span>
+                        </a>
+                        <a href="#news" class="steam-link-btn" id="link-read-news">
+                          <img src="assets/icons/clipboard.svg" alt="News" class="link-ico-svg">
+                          <span>Дневники разработки Deal With Destiny 2</span>
+                        </a>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+            <!-- Alternative View 2: Classic Spreadsheet List View -->
+            <section class="game-list-view-panel" id="game-list-view-panel" style="display: none;">
+              <div class="list-view-header">
+                <div class="list-view-title-group">
+                  <h3>БИБЛИОТЕКА STEAM — ТАБЛИЦА ВСЕХ ИГР</h3>
+                  <span class="list-view-hint">Двойной клик по строке запускает выбранную игру</span>
+                </div>
+                <div class="list-view-actions">
+                  <button class="steam-retro-btn small" id="btn-back-to-details">Подробный вид →</button>
+                </div>
+              </div>
+              <div class="list-view-table-wrap">
+                <table class="games-spreadsheet-table">
+                  <thead>
+                    <tr>
+                      <th width="32"></th>
+                      <th width="240">Название игры</th>
+                      <th width="140">Статус</th>
+                      <th width="110">Время в игре</th>
+                      <th width="110">Движок</th>
+                      <th width="120">Разработчик</th>
+                      <th width="75">AppID</th>
+                      <th width="100">Действие</th>
+                    </tr>
+                  </thead>
+                  <tbody id="games-spreadsheet-tbody">
+                    <!-- Populated dynamically via app.js -->
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <!-- ================= TAB 2: STORE / CATALOG ================= -->
+        <section class="tab-pane" id="tab-store">
+          <div class="store-layout">
+            <div class="store-banner-header">
+              <div class="store-badge">РЕКОМЕНДАЦИЯ VALVE & СООБЩЕСТВА</div>
+              <h2>КАТАЛОГ ИГР И МОДИФИКАЦИЙ SOURCE</h2>
+              <p>Официальные модификации, фанатские проекты и легендарные игры золотой эпохи Valve</p>
+            </div>
+
+            <div class="store-grid">
+              
+              <!-- Card 1: Deal With Destiny 2 -->
+              <div class="store-card featured">
+                <div class="store-card-img-wrap">
+                  <img src="assets/header.jpg" alt="Deal With Destiny 2">
+                  <span class="tag-featured">ХИТ ОЖИДАНИЯ</span>
+                </div>
+                <div class="store-card-body">
+                  <h3 class="store-game-title">Deal With Destiny 2</h3>
+                  <p class="store-game-author">Создатель: <strong>TAZIK29</strong> | Издатель: <strong>KUNI</strong></p>
+                  <p class="store-game-desc">Продолжение легендарного мода для Half-Life 2. Новая история Оскара Уилсона, побег на поезде, крушение и борьба с Альянсом.</p>
+                  <div class="store-card-footer">
+                    <span class="price-tag free" id="store-secret-price-tag" style="cursor: pointer;" title="Заводской пропуск TAZIK29 (Кликните для проверки)">Бесплатно для владельцев HL2</span>
+                    <button class="steam-retro-btn primary" onclick="selectGame('dwd2')">Перейти в библиотеку</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2: Synergy Co-op -->
+              <div class="store-card">
+                <div class="store-card-img-wrap">
+                  <img src="assets/capsules/synergy_capsule.jpg" alt="Synergy">
+                </div>
+                <div class="store-card-body">
+                  <h3 class="store-game-title">Synergy (HL2 Co-op)</h3>
+                  <p class="store-game-author">Разработчик: <strong>Synergy Team</strong></p>
+                  <p class="store-game-desc">Кооперативное прохождение Half-Life 2 и модов вместе с друзьями и стримером TAZIK29 по четвергам.</p>
+                  <div class="store-card-footer">
+                    <span class="price-tag free">Бесплатно</span>
+                    <button class="steam-retro-btn" onclick="selectGame('synergy')">В библиотеке</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3: Half-Life 2 -->
+              <div class="store-card">
+                <div class="store-card-img-wrap">
+                  <img src="assets/capsules/hl2_capsule.jpg" alt="Half-Life 2">
+                </div>
+                <div class="store-card-body">
+                  <h3 class="store-game-title">Half-Life 2</h3>
+                  <p class="store-game-author">Разработчик: <strong>Valve Corporation</strong></p>
+                  <p class="store-game-desc">Игра года 2004. Возвращение Гордона Фримена и революционный физический движок Havok.</p>
+                  <div class="store-card-footer">
+                    <span class="price-tag">$9.99 USD</span>
+                    <button class="steam-retro-btn" onclick="selectGame('hl2')">В библиотеке</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 4: Counter-Strike 1.6 -->
+              <div class="store-card">
+                <div class="store-card-img-wrap">
+                  <img src="assets/capsules/cs16_capsule.jpg" alt="CS 1.6">
+                </div>
+                <div class="store-card-body">
+                  <h3 class="store-game-title">Counter-Strike 1.6</h3>
+                  <p class="store-game-author">Разработчик: <strong>Valve / Minh Le / Cliffe</strong></p>
+                  <p class="store-game-desc">Главный тактический шутер всех времен. de_dust2, de_inferno, de_nuke.</p>
+                  <div class="store-card-footer">
+                    <span class="price-tag">$4.99 USD</span>
+                    <button class="steam-retro-btn" onclick="selectGame('cs16')">В библиотеке</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB 3: COMMUNITY / TAZIK29 ================= -->
+        <section class="tab-pane" id="tab-friends-tab">
+          <div class="community-layout">
+            
+            <div class="profile-card-steam">
+              <div class="profile-banner">
+                <div class="profile-avatar-wrap">
+                  <img src="assets/webcam.png" alt="TAZIK29 Avatar" class="profile-avatar-img">
+                  <span class="avatar-status-badge in-game" title="В сети Steam"></span>
+                </div>
+                <div class="profile-header-info">
+                  <div class="profile-name-row">
+                    <h2 class="profile-username">TAZIK29</h2>
+                    <span class="dev-shield-badge"><img src="assets/icons/star.svg" alt="star" class="badge-inline-svg"> СТРИМЕР / SOURCE DEV</span>
+                  </div>
+                  <div class="profile-status-text">
+                    Статус Steam: <strong class="game-link">В игре: Deal With Destiny 2</strong>
+                  </div>
+                  <div class="profile-steam-id">
+                    Steam ID: <code>STEAM_0:1:29292929</code> | Дмитрий (35 лет) | Россия
+                  </div>
+                </div>
+                <div class="profile-actions">
+                  <button class="steam-retro-btn primary" id="btn-message-profile">
+                    <img src="assets/icons/chat.svg" alt="Chat" class="btn-ico-svg">
+                    <span>Чат с TAZIK29</span>
+                  </button>
+                  <a href="https://steamcommunity.com/id/tazik29/" target="_blank" rel="noopener" class="steam-retro-btn">
+                    <img src="assets/icons/steam_valve.svg" alt="Steam" class="btn-ico-svg">
+                    <span>Стим Профиль</span>
+                  </a>
+                  <a href="https://www.donationalerts.com/r/tazik29" target="_blank" rel="noopener" class="steam-retro-btn highlight-btn">
+                    <img src="assets/icons/donate_heart.svg" class="btn-ico-svg" alt="Donate">
+                    <span>Поддержать (10р)</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Official Steam Bio & Schedule Showcase -->
+              <div class="profile-stream-notice profile-bio-showcase">
+                <div class="notice-col-left">
+                  <div class="notice-title-row">
+                    <span class="stream-live-pill steam-bio-pill">ИНФОРМАЦИЯ О СЕБЕ / БИОГРАФИЯ</span>
+                    <strong class="stream-heading">Дмитрий (TAZIK29) — Создатель мода Deal With Destiny 2</strong>
+                  </div>
+                  <blockquote class="steam-real-bio-quote">
+                    «Я Дмитрий, мне 35 года и я работаю на заводе и одновременно занимаюсь стримами (у меня есть ютуб канал под названием: TAZIK29, где я плотно изучаю вселенную half-life). Также люблю рисовать, смотреть аниме и играть в разные стрелялки.»
+                  </blockquote>
+                  <div class="bio-badges-strip">
+                    <span class="bio-chip"><img src="assets/icons/hammer_sdk.svg" class="chip-ico" alt="Mod"> Единственный мод: Deal With Destiny 2</span>
+                    <span class="bio-chip"><img src="assets/icons/star.svg" class="chip-ico" alt="Factory"> Завод & Стримы</span>
+                    <span class="bio-chip"><img src="assets/icons/youtube.svg" class="chip-ico" alt="YouTube"> YouTube: @tazik29</span>
+                    <span class="bio-chip"><img src="assets/icons/gamepad.svg" class="chip-ico" alt="Games"> Рисование & Аниме</span>
+                  </div>
+                </div>
+                <div class="notice-col-right schedule-box-card">
+                  <div class="schedule-head">
+                    <img src="assets/icons/clock_2031.svg" alt="Schedule" class="schedule-mini-ico">
+                    <strong>РАСПИСАНИЕ СТРИМОВ</strong>
+                  </div>
+                  <p class="schedule-text">
+                    <img src="assets/icons/calendar.svg" class="chip-ico" alt="Calendar"> <strong>С понедельника по четверг.</strong><br>
+                    <img src="assets/icons/gamepad.svg" class="chip-ico" alt="Multiplayer"> <strong>В четверг у нас практически всегда сетевые дни!</strong><br>
+                    <span class="schedule-note">P.S. Если не стримлю, то в большинстве случаев я заболел или делаю видос, так что ждите =)</span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="profile-content-grid">
+                
+                <!-- Left: Social Links, Support, About & PC Specs -->
+                <div class="profile-bio-box">
+                  
+                  <!-- SECTION: МОИ СОЦСЕТИ -->
+                  <div class="profile-section-card">
+                    <h3 class="section-card-title">
+                      <img src="assets/icons/chat.svg" class="section-title-svg" alt="Socials"> МОИ СОЦСЕТИ & СООБЩЕСТВО TAZIK29
+                    </h3>
+                    <div class="socials-steam-grid">
+                      <a href="https://steamcommunity.com/groups/tazik29off" target="_blank" rel="noopener" class="social-steam-btn">
+                        <span class="soc-icon"><img src="assets/icons/steam_icon.svg" class="soc-svg-icon" alt="Steam"></span>
+                        <div class="soc-text">
+                          <strong>Группа в Стиме</strong>
+                          <span>steamcommunity.com/groups/tazik29off</span>
+                        </div>
+                      </a>
+                      <a href="https://steamcommunity.com/id/tazik29/" target="_blank" rel="noopener" class="social-steam-btn">
+                        <span class="soc-icon"><img src="assets/icons/steam_icon.svg" class="soc-svg-icon" alt="Steam"></span>
+                        <div class="soc-text">
+                          <strong>Стим профиль</strong>
+                          <span>steamcommunity.com/id/tazik29</span>
+                        </div>
+                      </a>
+                      <a href="https://s.team/chat/WrzEFnTH" target="_blank" rel="noopener" class="social-steam-btn">
+                        <span class="soc-icon"><img src="assets/icons/chat.svg" class="soc-svg-icon" alt="Steam Chat"></span>
+                        <div class="soc-text">
+                          <strong>Чат в Стиме</strong>
+                          <span>s.team/chat/WrzEFnTH</span>
+                        </div>
+                      </a>
+                      <a href="https://s.team/chat/X0QDtFN0" target="_blank" rel="noopener" class="social-steam-btn">
+                        <span class="soc-icon"><img src="assets/icons/chat.svg" class="soc-svg-icon" alt="Steam Smokeroom"></span>
+                        <div class="soc-text">
+                          <strong>Курилка в Steam</strong>
+                          <span>s.team/chat/X0QDtFN0</span>
+                        </div>
+                      </a>
+                      <a href="https://youtube.com/@tazik29" target="_blank" rel="noopener" class="social-steam-btn yt">
+                        <span class="soc-icon"><img src="assets/icons/youtube.svg" class="soc-svg-icon" alt="YouTube"></span>
+                        <div class="soc-text">
+                          <strong>Основной YouTube</strong>
+                          <span>youtube.com/@tazik29</span>
+                        </div>
+                      </a>
+                      <a href="https://youtube.com/@tazik2929" target="_blank" rel="noopener" class="social-steam-btn yt">
+                        <span class="soc-icon"><img src="assets/icons/youtube.svg" class="soc-svg-icon" alt="YouTube 2"></span>
+                        <div class="soc-text">
+                          <strong>Второй YouTube</strong>
+                          <span>youtube.com/@tazik2929</span>
+                        </div>
+                      </a>
+                      <a href="http://www.twitch.tv/tazik29" target="_blank" rel="noopener" class="social-steam-btn twitch">
+                        <span class="soc-icon"><img src="assets/icons/twitch.svg" class="soc-svg-icon" alt="Twitch"></span>
+                        <div class="soc-text">
+                          <strong>Twitch (в говне)</strong>
+                          <span>twitch.tv/tazik29</span>
+                        </div>
+                      </a>
+                      <a href="https://discord.gg/cK7QFynZQ5" target="_blank" rel="noopener" class="social-steam-btn discord">
+                        <span class="soc-icon"><img src="assets/icons/discord.svg" class="soc-svg-icon" alt="Discord"></span>
+                        <div class="soc-text">
+                          <strong>Discord сервер</strong>
+                          <span>discord.gg/cK7QFynZQ5</span>
+                        </div>
+                      </a>
+                      <a href="https://vk.com/tazogaming" target="_blank" rel="noopener" class="social-steam-btn vk">
+                        <span class="soc-icon"><img src="assets/icons/vk.svg" class="soc-svg-icon" alt="VK Group"></span>
+                        <div class="soc-text">
+                          <strong>Группа ВКонтакте</strong>
+                          <span>vk.com/tazogaming</span>
+                        </div>
+                      </a>
+                      <a href="https://vk.com/tazik29" target="_blank" rel="noopener" class="social-steam-btn vk">
+                        <span class="soc-icon"><img src="assets/icons/vk.svg" class="soc-svg-icon" alt="VK Profile"></span>
+                        <div class="soc-text">
+                          <strong>Профиль ВКонтакте</strong>
+                          <span>vk.com/tazik29</span>
+                        </div>
+                      </a>
+                      <a href="https://vk.com/projectt29" target="_blank" rel="noopener" class="social-steam-btn vk">
+                        <span class="soc-icon"><img src="assets/icons/vk.svg" class="soc-svg-icon" alt="Project T29"></span>
+                        <div class="soc-text">
+                          <strong>Проект T29 (VK)</strong>
+                          <span>vk.com/projectt29</span>
+                        </div>
+                      </a>
+                      <a href="https://vk.me/join/ygEXWZ8GBXlEBUVGz6OVht0vBVNfFE71GKQ%3D" target="_blank" rel="noopener" class="social-steam-btn vk">
+                        <span class="soc-icon"><img src="assets/icons/chat.svg" class="soc-svg-icon" alt="VK Chat"></span>
+                        <div class="soc-text">
+                          <strong>Беседа в VK</strong>
+                          <span>vk.me/join/...</span>
+                        </div>
+                      </a>
+                      <a href="https://t.me/+FH8pRiy8MZQwZmEy" target="_blank" rel="noopener" class="social-steam-btn tg">
+                        <span class="soc-icon"><img src="assets/icons/telegram.svg" class="soc-svg-icon" alt="Telegram Chat"></span>
+                        <div class="soc-text">
+                          <strong>Телеграм чат</strong>
+                          <span>t.me/+FH8pRiy8MZQwZmEy</span>
+                        </div>
+                      </a>
+                      <a href="https://t.me/tazik29" target="_blank" rel="noopener" class="social-steam-btn tg">
+                        <span class="soc-icon"><img src="assets/icons/telegram.svg" class="soc-svg-icon" alt="Telegram Info"></span>
+                        <div class="soc-text">
+                          <strong>Телега (Секретная инфа)</strong>
+                          <span>t.me/tazik29</span>
+                        </div>
+                      </a>
+                      <a href="https://www.tiktok.com/@tazik29?lang=ru" target="_blank" rel="noopener" class="social-steam-btn tt">
+                        <span class="soc-icon"><img src="assets/icons/tiktok.svg" class="soc-svg-icon" alt="TikTok"></span>
+                        <div class="soc-text">
+                          <strong>TikTok</strong>
+                          <span>tiktok.com/@tazik29</span>
+                        </div>
+                      </a>
+                      <a href="https://coub.com/tazik29tazik29" target="_blank" rel="noopener" class="social-steam-btn">
+                        <span class="soc-icon"><img src="assets/icons/coub.svg" class="soc-svg-icon" alt="Coub"></span>
+                        <div class="soc-text">
+                          <strong>Coub</strong>
+                          <span>coub.com/tazik29tazik29</span>
+                        </div>
+                      </a>
+                      <a href="https://www.instagram.com/tazik29/" target="_blank" rel="noopener" class="social-steam-btn insta">
+                        <span class="soc-icon"><img src="assets/icons/instagram.svg" class="soc-svg-icon" alt="Instagram"></span>
+                        <div class="soc-text">
+                          <strong>Instagram</strong>
+                          <span>instagram.com/tazik29</span>
+                        </div>
+                      </a>
+                      <a href="https://store.steampowered.com/app/17520/Synergy/" target="_blank" rel="noopener" class="social-steam-btn">
+                        <span class="soc-icon"><img src="assets/icons/gamepad.svg" class="soc-svg-icon" alt="Synergy"></span>
+                        <div class="soc-text">
+                          <strong>Как с нами поиграть!</strong>
+                          <span>Synergy (Steam Store)</span>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- SECTION: ПОДДЕРЖАТЬ МЕНЯ -->
+                  <div class="profile-section-card support-section">
+                    <h3 class="section-card-title">
+                      <img src="assets/icons/donate_heart.svg" class="section-title-svg" alt="Donate"> ПОДДЕРЖАТЬ МЕНЯ & ДОНАТЫ
+                    </h3>
+                    <div class="support-methods-grid">
+                      
+                      <div class="support-item-box">
+                        <div class="support-icon-wrap da"><img src="assets/icons/donate_heart.svg" class="support-svg-icon" alt="DonationAlerts"></div>
+                        <div class="support-detail">
+                          <span class="support-label">DonationAlerts (от 10р / голос 30р):</span>
+                          <a href="https://www.donationalerts.com/r/tazik29" target="_blank" rel="noopener" class="support-link-btn">
+                            donationalerts.com/r/tazik29 ↗
+                          </a>
+                        </div>
+                      </div>
+
+                      <div class="support-item-box">
+                        <div class="support-icon-wrap dp"><img src="assets/icons/donate_heart.svg" class="support-svg-icon" alt="DonatePay"></div>
+                        <div class="support-detail">
+                          <span class="support-label">DonatePay (второй донат от 10р):</span>
+                          <a href="https://new.donatepay.ru/@TAZIK29" target="_blank" rel="noopener" class="support-link-btn">
+                            new.donatepay.ru/@TAZIK29 ↗
+                          </a>
+                        </div>
+                      </div>
+
+                      <div class="support-item-box">
+                        <div class="support-icon-wrap card"><img src="assets/icons/card_dollar.svg" class="support-svg-icon" alt="USD"></div>
+                        <div class="support-detail">
+                          <span class="support-label">Карта для ДОЛЛАРОВ:</span>
+                          <div class="copy-field-wrap">
+                            <code class="support-code">4173980001070941</code>
+                            <button class="btn-mini-copy" onclick="copyText('4173980001070941', 'Номер карты USD скопирован!')" title="Копировать">Копировать</button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="support-item-box">
+                        <div class="support-icon-wrap card"><img src="assets/icons/card_ruble.svg" class="support-svg-icon" alt="RUB"></div>
+                        <div class="support-detail">
+                          <span class="support-label">Карта для РУБЛЕЙ (с комментарием):</span>
+                          <div class="copy-field-wrap">
+                            <code class="support-code">4173980032489979</code>
+                            <button class="btn-mini-copy" onclick="copyText('4173980032489979', 'Номер карты RUB скопирован!')" title="Копировать">Копировать</button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="support-item-box">
+                        <div class="support-icon-wrap crypto"><img src="assets/icons/crypto_usdt.svg" class="support-svg-icon" alt="USDT"></div>
+                        <div class="support-detail">
+                          <span class="support-label">USDT (сеть TRC-20):</span>
+                          <div class="copy-field-wrap">
+                            <code class="support-code">TTxYSDNxjPaYYaUQR6EiXpYUvWNXDgzHd7</code>
+                            <button class="btn-mini-copy" onclick="copyText('TTxYSDNxjPaYYaUQR6EiXpYUvWNXDgzHd7', 'Адрес USDT (TRC-20) скопирован!')" title="Копировать">Копировать</button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="support-item-box">
+                        <div class="support-icon-wrap crypto"><img src="assets/icons/crypto_btc.svg" class="support-svg-icon" alt="BTC"></div>
+                        <div class="support-detail">
+                          <span class="support-label">Bitcoin (BTC):</span>
+                          <div class="copy-field-wrap">
+                            <code class="support-code">1Db6DrPd5E9JFb7ZxxsjnAZrrRBn2Mz9MZ</code>
+                            <button class="btn-mini-copy" onclick="copyText('1Db6DrPd5E9JFb7ZxxsjnAZrrRBn2Mz9MZ', 'Адрес BTC скопирован!')" title="Копировать">Копировать</button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="support-item-box">
+                        <div class="support-icon-wrap crypto"><img src="assets/icons/crypto_ton.svg" class="support-svg-icon" alt="TON"></div>
+                        <div class="support-detail">
+                          <span class="support-label">The Open Network (TON):</span>
+                          <div class="copy-field-wrap">
+                            <code class="support-code">UQComPW37SInh4inPwfKJGSW2I6BysoAOu5kygIaR_oLv_YN</code>
+                            <button class="btn-mini-copy" onclick="copyText('UQComPW37SInh4inPwfKJGSW2I6BysoAOu5kygIaR_oLv_YN', 'Адрес TON скопирован!')" title="Копировать">Копировать</button>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <!-- SECTION: КОНФИГУРАЦИЯ КОМПЬЮТЕРА (PC SPECS) -->
+                  <div class="profile-section-card">
+                    <h3 class="section-card-title">
+                      <img src="assets/icons/display.svg" class="section-title-svg" alt="PC"> КОНФИГУРАЦИЯ КОМПЬЮТЕРА TAZIK29
+                    </h3>
+                    <div class="pc-specs-table-wrap">
+                      <table class="pc-specs-table">
+                        <tbody>
+                          <tr>
+                            <td class="spec-label">Материнская плата:</td>
+                            <td class="spec-val">MSI® B250 Gaming Pro Carbon</td>
+                          </tr>
+                          <tr>
+                            <td class="spec-label">Процессор (CPU):</td>
+                            <td class="spec-val">Intel® Core™ i7-7700 @ 3.6 GHz</td>
+                          </tr>
+                          <tr>
+                            <td class="spec-label">Оперативная память (RAM):</td>
+                            <td class="spec-val">32 Gb @ Kingston® HyperX® FURY Black (DDR4, 2400 MHz, x2)</td>
+                          </tr>
+                          <tr>
+                            <td class="spec-label">Видеокарта (GPU):</td>
+                            <td class="spec-val">NVIDIA® GeForce® RTX 2080 Ti (11 Gb GDDR6)</td>
+                          </tr>
+                          <tr>
+                            <td class="spec-label">Операционная система:</td>
+                            <td class="spec-val">Microsoft® Windows® 10 Professional (x64)</td>
+                          </tr>
+                          <tr>
+                            <td class="spec-label">Корпус:</td>
+                            <td class="spec-val">Zalman® Z9 Plus (Black)</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Right: Profile Stats, Steam Badges & Friends -->
+                <div class="profile-sidebar-box">
+                  
+                  <h3>СТАТИСТИКА ПРОФИЛЯ STEAM</h3>
+                  <ul class="stats-list">
+                    <li><span>Уровень Steam:</span> <strong>33</strong></li>
+                    <li><span>Выслуга лет:</span> <strong>11 лет (850 XP)</strong></li>
+                    <li><span>Возраст стримера:</span> <strong>35 лет</strong></li>
+                    <li><span>Имя:</span> <strong>Дмитрий</strong></li>
+                    <li><span>Сетевые дни:</span> <strong>Каждый четверг</strong></li>
+                    <li><span>Созданных модов:</span> <strong>1 (Deal With Destiny 2)</strong></li>
+                    <li><span>Игр в библиотеке:</span> <strong>324</strong></li>
+                    <li><span>Друзей в Steam:</span> <strong>461</strong></li>
+                    <li><span>Скриншотов:</span> <strong>108</strong></li>
+                    <li><span>Предметов мастерской:</span> <strong>37</strong></li>
+                    <li><span>Комментариев:</span> <strong>727</strong></li>
+                    <li><span>Издатель:</span> <strong>KUNI</strong></li>
+                  </ul>
+
+                  <h3>ЗНАЧКИ И ДОСТИЖЕНИЯ</h3>
+                  <div class="profile-badges-row">
+                    <div class="badge-item">
+                      <div class="badge-icon">
+                        <img src="assets/icons/clock_2031.svg" alt="20 Years" class="badge-custom-svg">
+                      </div>
+                      <div class="badge-title">20 Лет со Steam</div>
+                    </div>
+                    <div class="badge-item">
+                      <div class="badge-icon">
+                        <img src="assets/icons/hammer_sdk.svg" alt="SDK" class="badge-custom-svg">
+                      </div>
+                      <div class="badge-title">Source SDK Guru</div>
+                    </div>
+                    <div class="badge-item">
+                      <div class="badge-icon">
+                        <img src="assets/icons/locomotive.svg" alt="Train" class="badge-custom-svg">
+                      </div>
+                      <div class="badge-title">DWD Train Operator</div>
+                    </div>
+                    <div class="badge-item">
+                      <div class="badge-icon">
+                        <img src="assets/icons/vac_shield.svg" alt="Valve" class="badge-custom-svg">
+                      </div>
+                      <div class="badge-title">Valve Community Hero</div>
+                    </div>
+                  </div>
+
+                  <h3>ДРУЗЬЯ TAZIK29 (4)</h3>
+                  <div class="friends-mini-list">
+                    <div class="friend-mini-item" id="friend-mini-kuni" style="cursor: pointer;" title="Открыть чат с KUNI">
+                      <img src="assets/kuni_avatar.jpg" alt="KUNI" class="friend-mini-avatar">
+                      <div class="friend-mini-info">
+                        <span class="friend-mini-name">KUNI [Publisher]</span>
+                        <span class="friend-mini-status online">В сети</span>
+                      </div>
+                    </div>
+                    <div class="friend-mini-item">
+                      <div class="friend-avatar-placeholder">
+                        <img src="assets/icons/steam_games/hl2.jpg" alt="GF" class="friend-placeholder-svg">
+                      </div>
+                      <div class="friend-mini-info">
+                        <span class="friend-mini-name">Gordon Freeman</span>
+                        <span class="friend-mini-status in-game">В игре: HL2</span>
+                      </div>
+                    </div>
+                    <div class="friend-mini-item">
+                      <div class="friend-avatar-placeholder">
+                        <img src="assets/icons/steam_valve.svg" alt="GN" class="friend-placeholder-svg">
+                      </div>
+                      <div class="friend-mini-info">
+                        <span class="friend-mini-name">Gabe Newell</span>
+                        <span class="friend-mini-status offline">Не в сети (7 дн.)</span>
+                      </div>
+                    </div>
+                    <div class="friend-mini-item">
+                      <div class="friend-avatar-placeholder">
+                        <img src="assets/icons/steam_games/cs16.jpg" alt="AV" class="friend-placeholder-svg">
+                      </div>
+                      <div class="friend-mini-info">
+                        <span class="friend-mini-name">Alyx Vance</span>
+                        <span class="friend-mini-status away">Отошла</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Quick server connect hint box -->
+                  <div class="sidebar-quick-server-box">
+                    <h4><img src="assets/icons/server.svg" class="server-badge-svg" alt="Server"> СЕРВЕРЫ СООБЩЕСТВА</h4>
+                    <p>Все официальные игровые серверы TAZIK29 собраны во вкладке <strong>«Серверы»</strong>!</p>
+                    <button class="steam-retro-btn" onclick="document.querySelector('.steam-tab[data-tab=\'servers-tab\']').click()">
+                      Перейти к списку серверов →
+                    </button>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================= TAB 4: SERVERS ================= -->
+        <section class="tab-pane" id="tab-servers-tab">
+          <div class="servers-browser-panel">
+            
+            <div class="server-tabs-sub">
+              <button class="sub-tab active">Интернет</button>
+              <button class="sub-tab">Избранное</button>
+              <button class="sub-tab">История</button>
+              <button class="sub-tab">Локальная сеть (LAN)</button>
+              <button class="sub-tab">Друзья</button>
+            </div>
+
+            <!-- Server Filter Toolbar -->
+            <div class="servers-toolbar">
+              <div class="filter-group">
+                <label>Игра:</label>
+                <select id="server-filter-game">
+                  <option value="all">Все серверы TAZIK29 (9)</option>
+                  <option value="l4d2">Left 4 Dead 2</option>
+                  <option value="synergy">Synergy Co-op</option>
+                  <option value="bm">Black Mesa</option>
+                  <option value="sven">Sven Co-op</option>
+                  <option value="tf2">Team Fortress 2</option>
+                  <option value="mc">Minecraft 1.16.5</option>
+                  <option value="roblox">Roblox</option>
+                  <option value="dods">Day of Defeat: Source</option>
+                  <option value="gmod">Garry's Mod</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label>Поиск:</label>
+                <input type="text" id="server-search-input" placeholder="Название, IP, карта...">
+              </div>
+              <div class="server-action-buttons">
+                <button class="steam-retro-btn" id="refresh-servers-btn">
+                  <img src="assets/icons/refresh.svg" alt="Refresh" class="btn-ico-svg">
+                  <span>Обновить список</span>
+                </button>
+                <button class="steam-retro-btn" id="add-favorite-server-btn">
+                  <img src="assets/icons/add.svg" alt="Add" class="btn-ico-svg">
+                  <span>Добавить сервер</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Server Table -->
+            <div class="server-table-container">
+              <table class="server-table">
+                <thead>
+                  <tr>
+                    <th width="32">Sec</th>
+                    <th width="310">Название сервера</th>
+                    <th width="140">Игра</th>
+                    <th width="180">IP Адрес / Ссылка</th>
+                    <th width="75">Игроки</th>
+                    <th width="120">Карта</th>
+                    <th width="65">Пинг</th>
+                  </tr>
+                </thead>
+                <tbody id="servers-tbody">
+                  <!-- Populated via app.js -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Server Footer Actions -->
+            <div class="servers-bottom-bar">
+              <div class="servers-count">
+                Всего серверов: <strong id="server-count-num">9</strong> | Игроков онлайн: <strong id="servers-online-num">108</strong>
+              </div>
+              <div class="servers-ctrl-btns">
+                <button class="steam-retro-btn" id="btn-server-info">Информация о сервере</button>
+                <button class="steam-play-button-small" id="btn-server-connect">ПОДКЛЮЧИТЬСЯ</button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================= TAB 5: NEWS ================= -->
+        <section class="tab-pane" id="tab-news">
+          <div class="news-layout">
+            <div class="news-feed-header">
+              <h2>НОВОСТИ STEAM И ДНЕВНИКИ РАЗРАБОТКИ TAZIK29</h2>
+              <span class="news-feed-sub">Последние обновления, патчи и анонсы проектов</span>
+            </div>
+
+            <div class="news-articles-list">
+              
+              <!-- Article 1 -->
+              <article class="news-article">
+                <div class="article-meta">
+                  <span class="article-badge dev">ДНЕВНИК РАЗРАБОТКИ</span>
+                  <span class="article-date">04 октября 2026</span>
+                  <span class="article-author">Автор: TAZIK29</span>
+                </div>
+                <h3 class="article-title">Deal With Destiny 2: Прогресс левел-дизайна сортировочной станции и физика крушения</h3>
+                <div class="article-content">
+                  <p>Привет всем поклонникам вселенной Deal With Destiny! Сегодня делюсь свежими новостями о разработке второй части.</p>
+                  <p>Мы завершили полировку вступительного эпизода с крушением товарного состава. Удалось добиться максимальной кинематографичности без потери интерактивности: все обломки физичны, взрывы вертолетов Альянса вызывают реалистичные ударные волны, а игрок сохраняет полный контроль над Оскаром Уилсоном.</p>
+                  <p>Также полностью переработана звуковая сцена: записан новый эмбиент в пустых вагонах и скрежет рельс. Работа продолжается полным ходом!</p>
+                </div>
+                <div class="article-footer">
+                  <span class="article-tags">Теги: #DWD2 #SourceEngine #HalfLife2 #HammerSDK</span>
+                </div>
+              </article>
+
+              <!-- Article 2 -->
+              <article class="news-article">
+                <div class="article-meta">
+                  <span class="article-badge valve">VALVE / STEAM</span>
+                  <span class="article-date">01 октября 2026</span>
+                  <span class="article-author">Valve Software</span>
+                </div>
+                <h3 class="article-title">Обновление платформы Steam: Поддержка пользовательских модификаций Source SDK</h3>
+                <div class="article-content">
+                  <p>Новое обновление клиента включает улучшенную синхронизацию Steam Cloud для модов, автоматическую проверку целостности кэша и интеграцию списка друзей с внутриигровым оверлеем.</p>
+                  <p>Проекты от независимых авторов, такие как Deal With Destiny 2, получают полную поддержку всех сервисов платформы.</p>
+                </div>
+              </article>
+
+              <!-- Article 3 -->
+              <article class="news-article">
+                <div class="article-meta">
+                  <span class="article-badge community">СООБЩЕСТВО</span>
+                  <span class="article-date">28 сентября 2026</span>
+                  <span class="article-author">KUNI Publishing</span>
+                </div>
+                <h3 class="article-title">Официальный релиз страницы Deal With Destiny 2 в каталоге Steam</h3>
+                <div class="article-content">
+                  <p>Страница проекта Deal With Destiny 2 теперь официально открыта в клиенте Steam! Добавляйте проект в список желаемого и следите за дневниками разработчика TAZIK29.</p>
+                </div>
+              </article>
+
+              <!-- Article 4 (Secret Archive 2003) -->
+              <article class="news-article secret-news-card" id="news-secret-2003" style="cursor: pointer;" title="Нажмите, чтобы расшифровать архив">
+                <div class="article-meta">
+                  <span class="article-badge secret-badge">ТАЙНЫЙ АРХИВ 2003</span>
+                  <span class="article-date">12 сентября 2003</span>
+                  <span class="article-author">Valve NetOps</span>
+                </div>
+                <h3 class="article-title">Засекреченная директива Valve: Первые тесты физики Source и тайна поезда 1337</h3>
+                <div class="article-content">
+                  <p>В закрытых логах сетевого движка 2003 года обнаружена аномалия: координаты заброшенного товарного депо совпадают с чертежами Deal With Destiny 2. [Нажмите на эту статью, чтобы расшифровать запись]</p>
+                </div>
+                <div class="article-footer">
+                  <span class="article-tags">Теги: #SecretProtocol #Source2003 #OscarWilson #DWD2</span>
+                </div>
+              </article>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB 6: ABOUT TAZIK29 ================= -->
+        <section class="tab-pane" id="tab-about-author">
+          <div class="about-author-layout">
+            <div class="about-hero-box">
+              <div class="author-avatar-big">
+                <img src="assets/webcam.png" alt="TAZIK29">
+              </div>
+              <div class="author-details-box">
+                <span class="author-tag">ГЛАВНЫЙ РАЗРАБОТЧИК & ДИЗАЙНЕР УРОВНЕЙ</span>
+                <h2>TAZIK29</h2>
+                <p class="author-lead">Создатель сюжетной модификации «Deal With Destiny 2» для движка Source.</p>
+                
+                <div class="author-features-list">
+                  <div class="feature-item">
+                    <div class="feat-icon-box">
+                      <img src="assets/icons/hammer_sdk.svg" alt="Hammer" class="feat-custom-svg">
+                    </div>
+                    <div>
+                      <strong>Архитектура и Маппинг</strong>
+                      <p>Создание детализированных карт в Valve Hammer Editor, оптимизация visleafs, проработка освещения радиксами и HDR.</p>
+                    </div>
+                  </div>
+                  <div class="feature-item">
+                    <div class="feat-icon-box">
+                      <img src="assets/icons/locomotive.svg" alt="Train" class="feat-custom-svg">
+                    </div>
+                    <div>
+                      <strong>Кинематография и Повествование</strong>
+                      <p>Глубокий сценарий во вселенной Half-Life 2, срежиссированные сцены, взаимодействие персонажей и раскрытие истории Оскара.</p>
+                    </div>
+                  </div>
+                  <div class="feature-item">
+                    <div class="feat-icon-box">
+                      <img src="assets/icons/scanner.svg" alt="Entities" class="feat-custom-svg">
+                    </div>
+                    <div>
+                      <strong>Скриптинг и Игровые Механики</strong>
+                      <p>Настройка сущностей Source (logic_relay, ambient_generic, prop_physics), звуковые триггеры, создание динамичных боевых ситуаций.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="author-cta-buttons">
+                  <button class="steam-play-button" id="btn-chat-author-big">
+                    <img src="assets/icons/chat.svg" alt="Chat" class="btn-ico-svg">
+                    <span>ОТКРЫТЬ ЧАТ СО СТИМА С TAZIK29</span>
+                  </button>
+                  <button class="steam-retro-btn" id="btn-copy-steamid">
+                    <img src="assets/icons/clipboard.svg" alt="Copy" class="btn-ico-svg">
+                    <span>Скопировать STEAM_0:1:29292929</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="about-quote-box">
+              <div class="quote-sign">“</div>
+              <p class="quote-text">«Моддинг на Source — это искусство создавать целый мир из брашей, текстур и физических объектов. Deal With Destiny 2 создается с душой и уважением к фанатам олдскульного Half-Life 2.»</p>
+              <span class="quote-author">— TAZIK29</span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- STATUS BAR (BOTTOM OF MAIN WINDOW) -->
+      <footer class="steam-statusbar">
+        <div class="status-left">
+          <span class="status-indicator-box ready"></span>
+          <span class="status-text" id="steam-status-label">Готово</span>
+          <span class="status-separator">|</span>
+          <button class="status-speed-btn" id="status-downloads-btn" title="Открыть менеджер загрузок Steam">
+            <span class="download-pulse-dot"></span> Сеть: 100.0 Mbps (Загрузки)
+          </button>
+          <span class="status-separator">|</span>
+          <img src="assets/icons/vac_shield.svg" alt="VAC" class="vac-icon-statusbar">
+          <span class="status-vac">Защищено Valve Anti-Cheat</span>
+          <span class="status-separator">|</span>
+          <button class="sys-btn mini" id="btn-camera-snapshot" title="Сделать снимок экрана Steam (F12)">
+            <img src="assets/icons/zoom.svg" alt="Screen" class="sys-ico">
+            <span>Скриншот (F12)</span>
+          </button>
+        </div>
+        <div class="status-right">
+          <span class="steam-version">Steam v1.0.0.29 (Valve Corp.)</span>
+        </div>
+      </footer>
+
+    </main>
+
+    <!-- ================= FLOATING WINDOW 1: FRIENDS LIST ================= -->
+    <div class="floating-window" id="window-friends" style="top: 80px; right: 40px; width: 280px; display: none;">
+      <div class="window-titlebar" id="friends-titlebar">
+        <div class="title-with-icon">
+          <img src="assets/icons/friends_icon.svg" alt="Friends" class="win-title-icon">
+          <span class="window-title">Друзья (Steam)</span>
+        </div>
+        <div class="window-controls">
+          <button class="win-btn minimize" id="friends-min-btn">_</button>
+          <button class="win-btn close" id="friends-close-btn">×</button>
+        </div>
+      </div>
+      <div class="friends-window-content">
+        <div class="my-friend-status">
+          <img src="assets/webcam.png" alt="Avatar" class="mini-avatar">
+          <div class="my-info">
+            <strong>T1NE</strong>
+            <span class="status-in-game">В игре: Deal With Destiny 2</span>
+          </div>
+        </div>
+
+        <div class="friends-group-header">В ИГРЕ (1)</div>
+        <ul class="friends-ul">
+          <li class="friend-row-click" id="friend-open-tazik" title="Нажмите, чтобы открыть чат">
+            <span class="status-dot in-game"></span>
+            <img src="assets/webcam.png" alt="TAZIK" class="friend-list-avatar in-game">
+            <div class="friend-name-col">
+              <span class="fname highlight">TAZIK29 [Разработчик]</span>
+              <span class="fsub">Deal With Destiny 2 (Dev Build)</span>
+            </div>
+          </li>
+        </ul>
+
+        <div class="friends-group-header">В СЕТИ (1)</div>
+        <ul class="friends-ul">
+          <li class="friend-row-click" id="friend-open-kuni" title="Нажмите, чтобы открыть чат">
+            <span class="status-dot online"></span>
+            <img src="assets/kuni_avatar.jpg" alt="KUNI" class="friend-list-avatar online">
+            <div class="friend-name-col">
+              <span class="fname">KUNI [Издатель]</span>
+              <span class="fsub">В сети</span>
+            </div>
+          </li>
+        </ul>
+
+        <div class="friends-group-header">НЕ В СЕТИ (4)</div>
+        <ul class="friends-ul">
+          <li class="friend-row-click">
+            <span class="status-dot offline"></span>
+            <div class="friend-name-col">
+              <span class="fname">Gordon Freeman</span>
+              <span class="fsub">Был 2 ч. назад</span>
+            </div>
+          </li>
+          <li class="friend-row-click">
+            <span class="status-dot offline"></span>
+            <div class="friend-name-col">
+              <span class="fname">Gabe Newell</span>
+              <span class="fsub">Был 5 дней назад</span>
+            </div>
+          </li>
+          <li class="friend-row-click" id="friend-open-barney" title="Нажмите, чтобы напомнить Барни про пиво">
+            <span class="status-dot offline"></span>
+            <div class="friend-name-col">
+              <span class="fname">Barney Calhoun</span>
+              <span class="fsub">В долгу за пиво</span>
+            </div>
+          </li>
+          <li class="friend-row-click" id="friend-open-tipradd" title="Нажмите, чтобы открыть чат">
+            <span class="status-dot offline"></span>
+            <div class="friend-name-col">
+              <span class="fname">TIPRADD</span>
+              <span class="fsub">Мемы и нарезки со стримов</span>
+            </div>
+          </li>
+        </ul>
+
+        <div class="friends-window-footer">
+          <button class="steam-retro-btn small" id="friends-add-btn">
+            <img src="assets/icons/add.svg" alt="Add" class="btn-ico-svg small">
+            <span>Добавить друга</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= FLOATING WINDOW 2: STEAM CHAT ================= -->
+    <div class="floating-window" id="window-chat" style="bottom: 40px; right: 340px; width: 380px; display: none;">
+      <div class="window-titlebar" id="chat-titlebar">
+        <div class="title-with-icon">
+          <img src="assets/icons/chat.svg" alt="Chat" class="win-title-icon">
+          <span class="window-title" id="chat-window-title">Чат с: TAZIK29</span>
+        </div>
+        <div class="window-controls">
+          <button class="win-btn minimize" id="chat-min-btn">_</button>
+          <button class="win-btn close" id="chat-close-btn">×</button>
+        </div>
+      </div>
+      <div class="chat-window-content">
+        <div class="chat-target-header">
+          <img src="assets/webcam.png" alt="Avatar" class="chat-avatar" id="chat-target-avatar">
+          <div class="chat-target-meta">
+            <strong id="chat-target-name">TAZIK29</strong>
+            <span class="status-in-game" id="chat-target-status">В игре: Deal With Destiny 2</span>
+          </div>
+        </div>
+
+        <div class="chat-messages-area" id="chat-messages">
+          <div class="chat-msg system">
+            <span>Вы начали диалог с пользователем TAZIK29. Никогда не сообщайте свой пароль в чате Steam.</span>
+          </div>
+          <div class="chat-msg incoming">
+            <div class="chat-msg-header">
+              <span class="sender">TAZIK29</span>
+              <span class="time">16:40</span>
+            </div>
+            <div class="chat-bubble">
+              Здорово! Я сейчас компилю свет на карте сортировочной станции для Deal With Destiny 2. Если есть вопросы по моду или маппингу — спрашивай!
+            </div>
+          </div>
+        </div>
+
+        <form class="chat-input-bar" id="chat-form">
+          <input type="text" id="chat-text-input" placeholder="Введите сообщение и нажмите Enter..." autocomplete="off">
+          <button type="submit" class="steam-retro-btn primary">Отправить</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= FLOATING WINDOW 3: PRODUCT ACTIVATION (CD-KEY) ================= -->
+    <div class="floating-window" id="window-activate" style="top: 150px; left: 300px; width: 420px; display: none;">
+      <div class="window-titlebar" id="activate-titlebar">
+        <div class="title-with-icon">
+          <img src="assets/icons/cd_key_icon.svg" alt="Key" class="win-title-icon">
+          <span class="window-title">Активация продукта в Steam</span>
+        </div>
+        <div class="window-controls">
+          <button class="win-btn close" id="activate-close-btn">×</button>
+        </div>
+      </div>
+      <div class="activate-content">
+        <div class="activate-lead">
+          <div class="key-icon-big">
+            <img src="assets/icons/cd_key_icon.svg" alt="Key" class="key-custom-big-svg">
+          </div>
+          <div>
+            <strong>Мастер регистрации продукта</strong>
+            <p>Введите ключ продукта (CD-Key) для активации игры или пасхалки в вашей учетной записи.</p>
+          </div>
+        </div>
+        <div class="key-input-box">
+          <label for="cd-key-input">Ключ продукта (пример: TAZIK29-DWD2-2026):</label>
+          <input type="text" id="cd-key-input" placeholder="TAZIK29-DWD2-GABEN" value="TAZIK29-DWD2-2026">
+          <div class="key-hints">
+            Подсказка: попробуйте ключи <code>TAZIK29</code>, <code>DWD2</code>, <code>GABEN</code>, <code>CROWBAR</code>, <code>HL3</code>
+          </div>
+        </div>
+        <div class="dialog-buttons">
+          <button class="steam-retro-btn" id="activate-cancel-btn">Отмена</button>
+          <button class="steam-retro-btn primary" id="activate-submit-btn">Далее &gt;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= MODAL: LAUNCH GAME DIALOG ================= -->
+    <div class="steam-modal-backdrop" id="launch-modal" style="display: none;">
+      <div class="steam-modal-box">
+        <div class="window-titlebar">
+          <div class="title-with-icon">
+            <img src="assets/icons/steam_valve.svg" alt="Steam" class="win-title-icon">
+            <span class="window-title">Запуск игры - Deal With Destiny 2</span>
+          </div>
+          <div class="window-controls">
+            <button class="win-btn close" id="launch-modal-close">×</button>
+          </div>
+        </div>
+        <div class="launch-modal-content">
+          <div class="launch-icon-row">
+            <div class="source-engine-logo">
+              <img src="assets/icons/steam_games/dwd2.png" alt="DWD2" class="launch-engine-img" id="launch-modal-game-icon">
+              <span>VALVE SOURCE</span>
+            </div>
+            <div class="launch-desc">
+              <h3>Подготовка к запуску Deal With Destiny 2...</h3>
+              <p id="launch-progress-status">Загрузка ресурсов Source Engine (materials, models, sounds)...</p>
+            </div>
+          </div>
+          
+          <div class="steam-progress-track">
+            <div class="steam-progress-bar" id="launch-progress-bar" style="width: 15%;"></div>
+          </div>
+
+          <div class="launch-quote-box" id="launch-tip">
+            «Совет: Монтировка Гордона Фримена и Оскара Уилсона ломает любые деревянные ящики с патронами.»
+          </div>
+
+          <div class="dialog-buttons">
+            <button class="steam-retro-btn" id="launch-modal-cancel">Отмена</button>
+            <button class="steam-retro-btn primary" id="launch-play-now-btn" disabled>В игру!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= MODAL: SCREENSHOT VIEWER (LIGHTBOX) ================= -->
+    <div class="steam-modal-backdrop" id="screenshot-viewer-modal" style="display: none;">
+      <div class="steam-modal-box screenshot-viewer-box">
+        <div class="window-titlebar">
+          <div class="title-with-icon">
+            <img src="assets/icons/zoom.svg" alt="Viewer" class="win-title-icon">
+            <span class="window-title" id="screenshot-viewer-title">Просмотр скриншота Steam</span>
+          </div>
+          <div class="window-controls">
+            <button class="win-btn close" id="screenshot-viewer-close">×</button>
+          </div>
+        </div>
+        <div class="screenshot-viewer-content">
+          <img src="" alt="Screenshot" id="screenshot-viewer-img" class="screenshot-viewer-large-img">
+          <div class="screenshot-viewer-caption" id="screenshot-viewer-caption">
+            Скриншот из Steam Community
+          </div>
+        </div>
+        <div class="screenshot-viewer-footer">
+          <button class="steam-retro-btn" id="screenshot-viewer-prev">&lt; Предыдущий</button>
+          <span class="screenshot-counter" id="screenshot-viewer-counter">1 / 4</span>
+          <button class="steam-retro-btn" id="screenshot-viewer-next">Следующий &gt;</button>
+          <button class="steam-retro-btn primary" id="screenshot-viewer-close-btn" style="margin-left: auto;">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CONTEXT MENU FOR LIBRARY GAMES ================= -->
+    <div class="steam-context-menu" id="game-context-menu" style="display: none;">
+      <div class="context-item bold" id="ctx-launch">Запустить игру</div>
+      <div class="context-divider"></div>
+      <div class="context-item" id="ctx-open-folder">Открыть папку с файлами</div>
+      <div class="context-item" id="ctx-check-integrity">Проверить целостность кэша...</div>
+      <div class="context-item" id="ctx-create-shortcut">Создать ярлык на рабочем столе</div>
+      <div class="context-divider"></div>
+      <div class="context-item" id="ctx-properties">Свойства...</div>
+    </div>
+
+    <!-- ================= MODAL: GAME PROPERTIES DIALOG ================= -->
+    <div class="steam-modal-backdrop" id="properties-modal" style="display: none;">
+      <div class="steam-modal-box properties-dialog-box">
+        <div class="window-titlebar">
+          <div class="title-with-icon">
+            <img src="assets/icons/steam_valve.svg" alt="Properties" class="win-title-icon">
+            <span class="window-title" id="prop-window-title">Свойства - Игра</span>
+          </div>
+          <div class="window-controls">
+            <button class="win-btn close" id="properties-modal-close">×</button>
+          </div>
+        </div>
+        <div class="properties-modal-content">
+          <div class="prop-tabs">
+            <button class="prop-tab active" data-prop-tab="general">Общие</button>
+            <button class="prop-tab" data-prop-tab="local">Локальные файлы</button>
+            <button class="prop-tab" data-prop-tab="updates">Обновления</button>
+          </div>
+          <div class="prop-panes">
+            <!-- Tab: General -->
+            <div class="prop-pane active" id="prop-pane-general">
+              <div class="prop-header-row">
+                <img src="" alt="Game Icon" class="prop-game-icon" id="prop-game-icon">
+                <div class="prop-header-meta">
+                  <h4 id="prop-game-title">Название игры</h4>
+                  <span id="prop-game-engine">Source Engine</span>
+                </div>
+              </div>
+              <table class="prop-meta-table">
+                <tr><td>Разработчик:</td><td id="prop-game-dev">Valve</td></tr>
+                <tr><td>Издатель:</td><td id="prop-game-pub">Valve</td></tr>
+                <tr><td>AppID:</td><td id="prop-game-appid">220</td></tr>
+                <tr><td>Состояние:</td><td>100% - Готово к запуску</td></tr>
+                <tr><td>Язык:</td><td>Русский, Английский</td></tr>
+              </table>
+              <div class="prop-btn-row">
+                <button class="steam-retro-btn" id="prop-launch-options-btn">Установить параметры запуска...</button>
+              </div>
+            </div>
+            <!-- Tab: Local Files -->
+            <div class="prop-pane" id="prop-pane-local" style="display: none;">
+              <p style="margin-bottom: 8px; color: #b7c7ae; font-size: 11px;">Управление установленными файлами игры на жестком диске.</p>
+              <div class="prop-stat-box">
+                <span>Занято на диске:</span> <strong id="prop-game-size">4,280 MB</strong>
+              </div>
+              <div class="prop-actions-stack">
+                <button class="steam-retro-btn" id="prop-open-folder-btn">Просмотреть локальные файлы...</button>
+                <button class="steam-retro-btn" id="prop-verify-btn">Проверить целостность файлов игры...</button>
+                <button class="steam-retro-btn" id="prop-backup-btn">Создать резервную копию файлов...</button>
+              </div>
+            </div>
+            <!-- Tab: Updates -->
+            <div class="prop-pane" id="prop-pane-updates" style="display: none;">
+              <div class="prop-group">
+                <label style="display: block; font-weight: bold; margin-bottom: 4px; font-size: 11px;">Автоматические обновления:</label>
+                <select class="steam-select" id="prop-update-select" style="width: 100%; background: #1c2218; color: #fff; border: 1px solid #141b12; padding: 3px; font-size: 11px;">
+                  <option selected>Всегда поддерживать эту игру в актуальном состоянии</option>
+                  <option>Обновлять эту игру только при запуске</option>
+                  <option>Высокий приоритет: автообновление в первую очередь</option>
+                </select>
+              </div>
+              <div class="prop-group" style="margin-top: 10px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 4px; font-size: 11px;">Фоновые загрузки:</label>
+                <select class="steam-select" style="width: 100%; background: #1c2218; color: #fff; border: 1px solid #141b12; padding: 3px; font-size: 11px;">
+                  <option selected>Разрешить фоновые загрузки во время игры</option>
+                  <option>Приостанавливать фоновые загрузки во время игры</option>
+                </select>
+              </div>
+              <div class="prop-cloud-box" style="margin-top: 12px; font-size: 11px;">
+                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                  <input type="checkbox" checked id="prop-cloud-check"> Включить синхронизацию со Steam Cloud
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="dialog-buttons" style="margin-top: 14px;">
+            <button class="steam-retro-btn primary" id="properties-modal-ok">Закрыть</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= MODAL: ABOUT STEAM DIALOG ================= -->
+    <div class="steam-modal-backdrop" id="about-steam-modal" style="display: none;">
+      <div class="steam-modal-box about-steam-box">
+        <div class="window-titlebar">
+          <div class="title-with-icon">
+            <img src="assets/icons/steam_valve.svg" alt="Steam" class="win-title-icon">
+            <span class="window-title">О программе Steam</span>
+          </div>
+          <div class="window-controls">
+            <button class="win-btn close" id="about-steam-close">×</button>
+          </div>
+        </div>
+        <div class="about-steam-content">
+          <div class="about-steam-hero">
+            <img src="assets/icons/steam_valve.svg" alt="Steam Logo" class="about-steam-logo-img">
+            <div>
+              <h3>Steam Client (Build 2003 / 2026)</h3>
+              <p>Версия v1.0.0.29 (Valve Corp. &amp; TAZIK29 Community)</p>
+            </div>
+          </div>
+          <div class="about-steam-body">
+            <p>Платформа цифровой дистрибуции игр и модификаций на движках GoldSrc и Source Engine.</p>
+            <p>Deal With Destiny 2 &bull; Half-Life 2 &bull; Counter-Strike 1.6 &bull; Synergy &bull; TAZIK29 Servers</p>
+            <div class="about-specs-box">
+              <div>API Версия: <strong>SteamAPI v0.9b</strong></div>
+              <div>Пакет протокола: <strong>Source Network Engine 2.1</strong></div>
+              <div>Пользователь: <strong>T1NE (STEAM_0:1:13374825)</strong></div>
+              <div>Сборка ядра: <strong>v2.1-custom (Source Engine 2004)</strong></div>
+              <div>Мемы и нарезки: <strong>TIPRADD (комьюнити TAZIK29)</strong></div>
+            </div>
+          </div>
+          <div class="dialog-buttons" style="margin-top: 12px;">
+            <button class="steam-retro-btn primary" id="about-steam-ok">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= FLOATING WINDOW 4: SOURCE DEVELOPER CONSOLE ================= -->
+    <div class="floating-window console-window" id="window-console" style="top: 100px; left: 160px; width: 620px; display: none;">
+      <div class="window-titlebar" id="console-titlebar">
+        <div class="title-with-icon">
+          <img src="assets/icons/hammer_sdk.svg" alt="Console" class="win-title-icon">
+          <span class="window-title">Консоль разработчика - Valve Source Engine [v2.1]</span>
+        </div>
+        <div class="window-controls">
+          <button class="win-btn minimize" id="console-min-btn">_</button>
+          <button class="win-btn close" id="console-close-btn">×</button>
+        </div>
+      </div>
+      <div class="console-content">
+        <div class="console-log-area" id="console-log">
+          <div class="con-line init">Valve Source Engine (Build 2482 / Steam v1.0.0.29)</div>
+          <div class="con-line init">Executing default config: 'autoexec.cfg'</div>
+          <div class="con-line init">Sound system initialized: 44100Hz 16-bit Stereo</div>
+          <div class="con-line info">Steam API initialized successfully. Account: T1NE (STEAM_0:1:13374825)</div>
+          <div class="con-line highlight">Deal With Destiny 2: Game data mounted from VPK archives.</div>
+          <div class="con-line prompt-hint">Введите 'help' для списка доступных команд консоли.</div>
+        </div>
+        <form class="console-input-row" id="console-form">
+          <span class="console-prompt-symbol">]</span>
+          <input type="text" id="console-input" class="console-input-field" placeholder="Введите команду (status, map, connect, god, help)..." autocomplete="off" spellcheck="false">
+          <button type="submit" class="steam-retro-btn small">Ввод</button>
+          <button type="button" class="steam-retro-btn small" id="console-clear-btn">Очистить</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= MODAL: IN-GAME STEAM OVERLAY (SHIFT+TAB) ================= -->
+    <div class="steam-overlay-backdrop" id="steam-overlay-modal" style="display: none;">
+      <div class="steam-overlay-container">
+        <!-- Top Overlay Bar -->
+        <header class="overlay-header">
+          <div class="overlay-time-widget">
+            <span class="overlay-big-time" id="overlay-clock">21:15</span>
+            <span class="overlay-date" id="overlay-date">Воскресенье, 4 октября</span>
+          </div>
+          <div class="overlay-game-info">
+            <h2 id="overlay-game-title">Deal With Destiny 2</h2>
+            <div class="overlay-session-meta">
+              <span>Сессия: <strong id="overlay-session-time">1 ч. 24 мин.</strong></span>
+              <span class="bullet">&bull;</span>
+              <span>Частота кадров: <strong class="green-text">120 FPS</strong></span>
+              <span class="bullet">&bull;</span>
+              <span>Синхронизация Cloud: <strong class="green-text">100% OK</strong></span>
+            </div>
+          </div>
+          <button class="steam-retro-btn primary overlay-return-btn" id="overlay-close-btn">
+            Вернуться в игру (Shift+Tab)
+          </button>
+        </header>
+
+        <!-- Main Overlay Widgets Grid -->
+        <div class="overlay-widgets-grid">
+          <!-- Widget 1: Quick Chat / Friends -->
+          <div class="overlay-widget-card">
+            <div class="overlay-widget-title">
+              <img src="assets/icons/friends_icon.svg" alt="Friends" class="widget-ico">
+              <span>Друзья & Сообщество</span>
+            </div>
+            <div class="overlay-friends-quick">
+              <div class="overlay-friend-row" id="overlay-chat-tazik">
+                <img src="assets/webcam.png" alt="TAZIK29" class="overlay-avatar in-game">
+                <div class="overlay-friend-meta">
+                  <strong>TAZIK29 [Разработчик]</strong>
+                  <span>В игре: Deal With Destiny 2 (Dev Build)</span>
+                </div>
+                <button class="steam-retro-btn small">Чат</button>
+              </div>
+              <div class="overlay-friend-row" id="overlay-chat-kuni">
+                <img src="assets/kuni_avatar.jpg" alt="KUNI" class="overlay-avatar online">
+                <div class="overlay-friend-meta">
+                  <strong>KUNI [Издатель]</strong>
+                  <span>В сети &bull; store.steampowered.com</span>
+                </div>
+                <button class="steam-retro-btn small">Чат</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Widget 2: Achievements Overview -->
+          <div class="overlay-widget-card">
+            <div class="overlay-widget-title">
+              <img src="assets/icons/star.svg" alt="Achievements" class="widget-ico">
+              <span>Достижения в игре</span>
+            </div>
+            <div class="overlay-achieve-summary" id="overlay-achieve-summary">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Widget 3: Community Guides & News -->
+          <div class="overlay-widget-card">
+            <div class="overlay-widget-title">
+              <img src="assets/icons/clipboard.svg" alt="Guides" class="widget-ico">
+              <span>Руководства сообщества & Серверы</span>
+            </div>
+            <div class="overlay-guides-list">
+              <a href="#servers" class="overlay-guide-link" id="overlay-link-servers">
+                <strong>Официальные серверы TAZIK29 (9 серверов онлайн)</strong>
+                <span>Left 4 Dead 2, Synergy, Black Mesa, Sven Co-op, TF2...</span>
+              </a>
+              <a href="#dwd2" class="overlay-guide-link" id="overlay-link-dwd2">
+                <strong>Deal With Destiny 2: Секреты сортировочной станции</strong>
+                <span>Прохождение пролога и побег на товарном составе</span>
+              </a>
+              <a href="https://steamcommunity.com/id/tazik29/" target="_blank" rel="noopener" class="overlay-guide-link">
+                <strong>Steam профиль Дмитрия (TAZIK29)</strong>
+                <span>steamcommunity.com/id/tazik29 ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Widget 4: Screenshots Quick Viewer -->
+          <div class="overlay-widget-card">
+            <div class="overlay-widget-title">
+              <img src="assets/icons/zoom.svg" alt="Screenshots" class="widget-ico">
+              <span>Скриншоты сообщества (F12)</span>
+            </div>
+            <div class="overlay-screenshots-row" id="overlay-screenshots-strip">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Overlay Bottom Bar -->
+        <footer class="overlay-footer">
+          <span>Оверлей Steam 2003 &bull; Горячая клавиша: <kbd>Shift + Tab</kbd> &bull; Скриншот: <kbd>F12</kbd></span>
+          <span>Valve Anti-Cheat (VAC) активен</span>
+        </footer>
+      </div>
+    </div>
+
+    <!-- ================= MODAL: STEAM 2003 SETTINGS DIALOG ================= -->
+    <div class="steam-modal-backdrop" id="settings-modal" style="display: none;">
+      <div class="steam-modal-box settings-dialog-box">
+        <div class="window-titlebar">
+          <div class="title-with-icon">
+            <img src="assets/icons/gear.svg" alt="Settings" class="win-title-icon">
+            <span class="window-title">Настройки Steam</span>
+          </div>
+          <div class="window-controls">
+            <button class="win-btn close" id="settings-close-btn">×</button>
+          </div>
+        </div>
+        <div class="settings-modal-content">
+          <div class="prop-tabs" id="settings-tabs">
+            <button class="prop-tab active" data-set-tab="account">Учетная запись</button>
+            <button class="prop-tab" data-set-tab="friends">Друзья</button>
+            <button class="prop-tab" data-set-tab="voice">Голос</button>
+            <button class="prop-tab" data-set-tab="interface">Интерфейс</button>
+            <button class="prop-tab" data-set-tab="downloads">Загрузки</button>
+          </div>
+          <div class="prop-panes" id="settings-panes">
+            <!-- Tab: Account -->
+            <div class="prop-pane active" id="set-pane-account">
+              <div class="set-row">
+                <span class="set-label">Имя аккаунта:</span>
+                <strong class="set-val">T1NE</strong>
+              </div>
+              <div class="set-row">
+                <span class="set-label">Steam ID:</span>
+                <code>STEAM_0:1:13374825</code>
+              </div>
+              <div class="set-row">
+                <span class="set-label">Статус VAC:</span>
+                <span class="green-text">В хорошем состоянии (Блокировок нет)</span>
+              </div>
+              <div class="set-row">
+                <span class="set-label">Участие в бета-тестах:</span>
+                <span>Steam Source SDK Beta</span>
+              </div>
+              <div class="set-row">
+                <span class="set-label">Электронная почта:</span>
+                <span>tazik29@valvesoftware.community (Подтвержден)</span>
+              </div>
+              <div class="set-row" style="margin-top: 10px; border-top: 1px dashed #404f38; padding-top: 8px;">
+                <span class="set-label">Хранилище GitHub Pages:</span>
+                <span>Локальное хранилище браузера (P2P Multi-Tab)</span>
+              </div>
+              <div class="prop-btn-row" style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
+                <button class="steam-retro-btn" id="btn-open-steam-id" title="Создать пропуск участника Valve Steam">Карточка Steam ID...</button>
+                <button class="steam-retro-btn" id="btn-export-save" title="Экспорт всех 10 секретов, квеста и истории в JSON">Экспорт данных (JSON)...</button>
+                <button class="steam-retro-btn" id="btn-import-save" title="Восстановить прогресс из файла JSON">Импорт данных (JSON)...</button>
+                <input type="file" id="input-import-save-file" accept=".json" style="display: none;">
+              </div>
+              <div class="prop-btn-row" style="margin-top: 10px;">
+                <button class="steam-retro-btn" id="btn-change-pw">Сменить пароль...</button>
+                <button class="steam-retro-btn" id="btn-change-email">Изменить контактный адрес...</button>
+              </div>
+            </div>
+
+            <!-- Tab: Friends -->
+            <div class="prop-pane" id="set-pane-friends" style="display: none;">
+              <div class="set-group">
+                <label class="steam-checkbox-label">
+                  <input type="checkbox" checked id="set-sound-msg"> Воспроизводить звук при получении сообщения
+                </label>
+                <label class="steam-checkbox-label">
+                  <input type="checkbox" checked id="set-toast-online"> Показывать всплывающее окно, когда друг входит в сеть
+                </label>
+                <label class="steam-checkbox-label">
+                  <input type="checkbox" checked id="set-toast-game"> Показывать всплывающее окно, когда друг запускает игру
+                </label>
+                <label class="steam-checkbox-label">
+                  <input type="checkbox" checked id="set-sign-in"> Автоматически входить в сеть друзей при запуске Steam
+                </label>
+              </div>
+            </div>
+
+            <!-- Tab: Voice -->
+            <div class="prop-pane" id="set-pane-voice" style="display: none;">
+              <p style="font-size: 11px; margin-bottom: 8px;">Настройка микрофона для внутриигрового голосового чата Source Engine:</p>
+              <div class="set-group">
+                <label style="font-size: 11px; font-weight: bold;">Громкость записи (Микрофон):</label>
+                <input type="range" min="0" max="100" value="85" class="steam-slider" id="voice-rec-slider">
+              </div>
+              <div class="set-group" style="margin-top: 8px;">
+                <label style="font-size: 11px; font-weight: bold;">Громкость приема:</label>
+                <input type="range" min="0" max="100" value="90" class="steam-slider" id="voice-out-slider">
+              </div>
+              <div class="mic-test-box">
+                <button class="steam-retro-btn" id="btn-test-mic">Тест микрофона</button>
+                <div class="mic-meter-track">
+                  <div class="mic-meter-bar" id="mic-meter-bar"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab: Interface -->
+            <div class="prop-pane" id="set-pane-interface" style="display: none;">
+              <div class="set-group">
+                <label style="font-size: 11px; font-weight: bold;">Язык клиента:</label>
+                <select class="steam-select" style="width: 100%; margin-top: 3px;">
+                  <option selected>Русский (Russian)</option>
+                  <option>English</option>
+                  <option>Deutsch</option>
+                  <option>Français</option>
+                </select>
+              </div>
+              <div class="set-group" style="margin-top: 10px;">
+                <label class="steam-checkbox-label">
+                  <input type="checkbox" checked id="set-enable-overlay"> Включить оверлей Steam во время игры (Shift + Tab)
+                </label>
+                <label class="steam-checkbox-label">
+                  <input type="checkbox" checked> Запускать Steam при включении компьютера
+                </label>
+                <label class="steam-checkbox-label">
+                  <input type="checkbox" checked> Запускать в окне библиотеки игр
+                </label>
+                <label class="steam-checkbox-label secret-switch-label" style="color: #8da486; margin-top: 6px; border-top: 1px dashed #404f38; padding-top: 6px;" title="Скрытый тумблер протокола Source 2003">
+                  <input type="checkbox" id="secret-dev-checkbox"> Режим отладки Source 2003 (Секретный тумблер ядра)
+                </label>
+              </div>
+            </div>
+
+            <!-- Tab: Downloads -->
+            <div class="prop-pane" id="set-pane-downloads" style="display: none;">
+              <div class="set-group">
+                <label style="font-size: 11px; font-weight: bold;">Регион для загрузки:</label>
+                <select class="steam-select" style="width: 100%; margin-top: 3px;">
+                  <option selected>Russia - Moscow (Valve Edge Server)</option>
+                  <option>Russia - Saint Petersburg</option>
+                  <option>Europe - Frankfurt</option>
+                  <option>US - East</option>
+                </select>
+              </div>
+              <div class="set-group" style="margin-top: 10px;">
+                <label style="font-size: 11px; font-weight: bold;">Ограничение скорости:</label>
+                <select class="steam-select" style="width: 100%; margin-top: 3px;">
+                  <option selected>Без ограничений (100.0 Mbps)</option>
+                  <option>10 MB/s</option>
+                  <option>5 MB/s</option>
+                  <option>1 MB/s</option>
+                </select>
+              </div>
+              <div style="margin-top: 12px;">
+                <button class="steam-retro-btn" id="btn-clear-download-cache">Очистить кэш загрузки...</button>
+              </div>
+            </div>
+          </div>
+          <div class="dialog-buttons" style="margin-top: 14px;">
+            <button class="steam-retro-btn" id="settings-cancel-btn">Отмена</button>
+            <button class="steam-retro-btn primary" id="settings-ok-btn">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= MODAL: STEAM 2003 ID CARD GENERATOR ================= -->
+    <div class="steam-modal-backdrop" id="steam-id-modal" style="display: none;">
+      <div class="steam-modal-box" style="width: 500px; max-width: 95vw;">
+        <div class="window-titlebar">
+          <div class="title-with-icon">
+            <img src="assets/icons/steam_icon.svg" alt="ID Card" class="win-title-icon">
+            <span class="window-title">Пропуск участника сообщества Valve Steam (2003)</span>
+          </div>
+          <div class="window-controls">
+            <button class="win-btn close" id="steam-id-close-btn">×</button>
+          </div>
+        </div>
+        <div class="settings-modal-content" style="padding: 14px; text-align: center;">
+          <p style="font-size: 11px; margin-bottom: 10px; color: #b8c9b3; text-align: left;">Официальный ретро-пропуск аккаунта T1NE в стиле Win32 клиента Valve 2003 года. Вы можете сохранить его как изображение PNG:</p>
+          <div style="background: #191e16; padding: 8px; border: 1px inset #2d3529; display: inline-block;">
+            <canvas id="steam-id-canvas" width="460" height="240" style="display: block; max-width: 100%; height: auto; image-rendering: pixelated;"></canvas>
+          </div>
+          <div class="dialog-buttons" style="margin-top: 14px; justify-content: flex-end; display: flex; gap: 8px;">
+            <button class="steam-retro-btn primary" id="btn-download-steam-id">Сохранить пропуск (.PNG)</button>
+            <button class="steam-retro-btn" id="btn-close-steam-id-modal">Закрыть</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= FLOATING WINDOW 5: STEAM DOWNLOAD MANAGER ================= -->
+    <div class="floating-window downloads-window" id="window-downloads" style="bottom: 60px; left: 80px; width: 640px; display: none;">
+      <div class="window-titlebar" id="downloads-titlebar">
+        <div class="title-with-icon">
+          <img src="assets/icons/save.svg" alt="Downloads" class="win-title-icon">
+          <span class="window-title">Менеджер загрузок Steam</span>
+        </div>
+        <div class="window-controls">
+          <button class="win-btn minimize" id="downloads-min-btn">_</button>
+          <button class="win-btn close" id="downloads-close-btn">×</button>
+        </div>
+      </div>
+      <div class="downloads-content">
+        <!-- Live Speed Graph Canvas -->
+        <div class="downloads-graph-panel">
+          <div class="graph-header">
+            <span>График сетевой активности (Пиковая: 12.8 MB/s &bull; Текущая: <strong id="live-dl-speed" class="green-text">11.4 MB/s</strong>)</span>
+            <span class="graph-valve-node">Valve Edge Server #4 (Moscow)</span>
+          </div>
+          <canvas id="downloads-canvas" width="600" height="85" class="downloads-canvas"></canvas>
+        </div>
+
+        <!-- Active Download Item -->
+        <div class="active-download-card">
+          <div class="dl-game-row">
+            <img src="assets/icons/steam_games/dwd2.png" alt="DWD2" class="dl-game-icon">
+            <div class="dl-game-info">
+              <h4>Deal With Destiny 2 — Обновление файлов контента (Patch 1.0.4)</h4>
+              <span class="dl-eta-label">Осталось: ~35 сек. &bull; Загружено: <strong id="dl-bytes-label">4,120 MB / 4,520 MB</strong></span>
+            </div>
+            <div class="dl-btn-group">
+              <button class="steam-retro-btn small" id="dl-pause-btn">Пауза</button>
+            </div>
+          </div>
+          <div class="steam-progress-track">
+            <div class="steam-progress-bar dl-striped-bar" id="dl-progress-bar" style="width: 87%;"></div>
+          </div>
+        </div>
+
+        <!-- Download Queue -->
+        <div class="dl-queue-section">
+          <div class="queue-header">Очередь загрузки (1)</div>
+          <div class="queue-item-row">
+            <img src="assets/icons/steam_games/hl2dm.jpg" alt="HL2DM" class="dl-mini-icon">
+            <div class="queue-item-info">
+              <strong>Half-Life 2: Deathmatch</strong>
+              <span>В очереди &bull; Размер: 1,240 MB</span>
+            </div>
+            <span class="queue-badge">В очереди</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= FLOATING WINDOW 6: SECRETS QUEST TRACKER ================= -->
+    <div class="floating-window quest-window" id="window-quest-tracker" style="top: 85px; left: 160px; width: 640px; display: none;">
+      <div class="window-titlebar" id="quest-tracker-titlebar">
+        <div class="title-with-icon">
+          <img src="assets/icons/star.svg" alt="Quest" class="win-title-icon">
+          <span class="window-title">Расследование Steam 2003: 10 шагов к Гранд-Секрету</span>
+        </div>
+        <div class="window-controls">
+          <button class="win-btn close" id="quest-tracker-close-btn">×</button>
+        </div>
+      </div>
+      <div class="quest-tracker-content">
+        <div class="quest-header-bar">
+          <div>
+            <strong>Журнал поиска тайн Valve &amp; TAZIK29</strong>
+            <p>Найдите все 10 скрытых аномалий в клиенте Steam 2003 года, чтобы открыть тайный архив.</p>
+          </div>
+          <div class="quest-progress-box">
+            <span class="quest-progress-num" id="quest-progress-counter">0 / 10</span>
+            <div class="steam-progress-track" style="width: 140px; height: 10px;">
+              <div class="steam-progress-bar" id="quest-progress-bar-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quest-list-container" id="quest-list-container">
+          <!-- Rendered dynamically via app.js -->
+        </div>
+
+        <div class="dialog-buttons" style="margin-top: 10px; display: flex; justify-content: space-between;">
+          <button class="steam-retro-btn" id="btn-reset-quest-progress">Сбросить прогресс</button>
+          <div style="display: flex; gap: 8px;">
+            <button class="steam-retro-btn primary" id="btn-open-master-archive" disabled>Открыть Гранд-Архив</button>
+            <button class="steam-retro-btn" id="quest-tracker-ok-btn">Закрыть</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= FLOATING WINDOW 7: MASTER SECRET GRAND ARCHIVE ================= -->
+    <div class="floating-window master-archive-window" id="window-master-secret" style="top: 55px; left: 100px; width: 720px; display: none;">
+      <div class="window-titlebar" id="master-secret-titlebar">
+        <div class="title-with-icon">
+          <img src="assets/icons/star.svg" alt="Star" class="win-title-icon">
+          <span class="window-title">[*] ЗАКРЫТЫЙ АРХИВ VALVE &amp; TAZIK29 // ДОСТУП: T1NE (10/10) [*]</span>
+        </div>
+        <div class="window-controls">
+          <button class="win-btn close" id="master-secret-close-btn">×</button>
+        </div>
+      </div>
+      <div class="master-archive-content">
+        
+        <!-- Grand Banner -->
+        <div class="master-seal-banner">
+          <div class="master-seal-icon">
+            <img src="assets/icons/star.svg" alt="Master Star" class="master-star-svg">
+          </div>
+          <div class="master-seal-text">
+            <h3>ВЕРХОВНЫЙ ХРАНИТЕЛЬ STEAM 2003: T1NE</h3>
+            <p>Поздравляем! Вы раскрыли все 10 скрытых механизмов и получили высший уровень допуска к секретам Source Engine и Deal With Destiny 2.</p>
+          </div>
+        </div>
+
+        <!-- Master Tabs or Sections -->
+        <div class="master-sections-grid">
+          
+          <!-- Section 1: Secret Ambient Soundtrack Player -->
+          <div class="master-card soundtrack-card">
+            <h4>[СЕКРЕТНЫЙ АУДИОТРЕК]</h4>
+            <div class="soundtrack-info">
+              <span class="soundtrack-title">Deal With Destiny 2: «Эхо Сортировочной»</span>
+              <span class="soundtrack-composer">Синтезатор: Kelly Bailey Source Style (Web Audio API 2003)</span>
+            </div>
+            <div class="soundtrack-controls">
+              <button class="steam-retro-btn primary" id="btn-play-secret-ambient">
+                <span id="secret-play-label">► Воспроизвести трек</span>
+              </button>
+              <button class="steam-retro-btn" id="btn-stop-secret-ambient" disabled>
+                <span>■ Стоп</span>
+              </button>
+              <span class="soundtrack-status-text" id="secret-audio-status">Остановлено</span>
+            </div>
+            <div class="retro-sound-visualizer" id="secret-audio-visualizer">
+              <span class="v-bar"></span><span class="v-bar"></span><span class="v-bar"></span><span class="v-bar"></span>
+              <span class="v-bar"></span><span class="v-bar"></span><span class="v-bar"></span><span class="v-bar"></span>
+              <span class="v-bar"></span><span class="v-bar"></span><span class="v-bar"></span><span class="v-bar"></span>
+            </div>
+          </div>
+
+          <!-- Section 2: Retro CRT / Phosphor Monitor Mode -->
+          <div class="master-card theme-card">
+            <h4>[ВИЗУАЛЬНЫЙ МОД: CRT ФОСФОР 2003]</h4>
+            <p class="theme-desc">Активация режима винтажного ЭЛТ-монитора с эффектом электронно-лучевой трубки и кинескопных строк.</p>
+            <div class="theme-controls">
+              <button class="steam-retro-btn" id="btn-toggle-crt-mode">
+                <span id="crt-toggle-label">Включить CRT Scanline Режим</span>
+              </button>
+              <span class="crt-status-badge" id="crt-status-indicator">Выключен</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Section 3: Classified Lore Document -->
+        <div class="master-card lore-card">
+          <h4>[РАССЕКРЕЧЕННЫЙ ДОКУМЕНТ #1337-DWD2]</h4>
+          <div class="lore-paper-box">
+            <div class="lore-header-line">
+              <span>ОБЪЕКТ: Оскар Уилсон</span>
+              <span>СТАТУС: В бегах / Сортировочная станция</span>
+              <span>ДАТА: Октябрь 2026 (Релиз: 2031)</span>
+            </div>
+            <div class="lore-body-text">
+              <p><strong>Записка главного разработчика TAZIK29:</strong></p>
+              <p>«Если ты читаешь это окно, значит ты действительно любишь этот проект так же сильно, как и мы. Deal With Destiny 2 — это не просто модификация. Это дань уважения той эпохе, когда игры делались с душой, а каждый браш и триггер в Hammer SDK расставлялся вручную.»</p>
+              <p>«Оскар Уилсон после крушения эшелона не погиб: ударная волна от взрыва цистерны отбросила его в подвальный коллектор заброшенного депо. В обломках он находит прототип гравитационной монтировки. Дата 2031 — это наша шутка про долгострои, но закрытый билд тестируется прямо сейчас узким кругом верных соратников.»</p>
+              <p class="lore-sign">Подпись: Дмитрий (TAZIK29), KU.NI Publishing, при поддержке T1NE.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dialog-buttons" style="margin-top: 12px; display: flex; justify-content: flex-end;">
+          <button class="steam-retro-btn primary" id="master-secret-done-btn">Закрыть секретный архив</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================= RETRO SYSTEM TRAY BAR (WHEN MINIMIZED) ================= -->
+    <div class="system-tray-bar" id="system-tray-bar" style="display: none;">
+      <button class="tray-restore-btn" id="tray-restore-btn" title="Нажмите, чтобы развернуть Steam">
+        <img src="assets/icons/steam_valve.svg" alt="Steam" class="tray-icon-img">
+        <span>Steam (T1NE)</span>
+      </button>
+      <div class="tray-clock" id="tray-clock">21:38</div>
+    </div>
+
+    <!-- Camera flash element for F12 screenshot -->
+    <div class="screen-shutter-flash" id="screen-shutter-flash" style="display: none;"></div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

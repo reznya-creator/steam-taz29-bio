@@ -1,0 +1,12 @@
+# Python & SQLite caches
+__pycache__/
+*.pyc
+*.pyo
+*.db
+.venv/
+.env
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
